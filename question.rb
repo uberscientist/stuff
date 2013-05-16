@@ -25,35 +25,57 @@ case choice
   when 'delete'
 
     # Get input from user, the media name we want to remove from the file
-    puts "Enter media to delete";
-    characters = gets.chomp;
+    puts "Enter media to delete"
+    title = gets.chomp
+    p title
 
-    #TODO: Everything here vvvv
+    # Initialize our empty database array
+    db = []
+
     # Let's open our file database
-    # And load it into a Ruby array
+    File.read("arraystarter.rb").each_line do |line|
+
+      # And load it into a Ruby array
+      db << line.chop
+    end
+
     # Remove the requested entry
+    db.delete(title)
+
     # Write the array back to the file
-    # Done!
+    File.open("arraystarter.rb", "w") { |file|
 
-    File.open("arraystarter.rb").each { |line| 
+      # Loop over our array
+      db.each { |entry|
 
-      unless characters.each_char.map  { |c| line.include?(c) }.include? false
+        # Write the entry and a newline character to the file
+        file.write(entry + "\n")
+      }
 
-        puts "Did you mean #{line}?";
-        intent = gets.chomp.downcase
+      # Done!
+      file.close
 
-        case intent
-
-          when 'yes'
-            puts "#{line} deleted"
-            content_array = IO.readlines("arraystarter.rb")
-            content_array.delete(line)
-            puts content_array
-
-          when 'no'
-            puts "Nevermind, then."
-
-        end
-      end
     }
+
+    #File.open("arraystarter.rb").each { |line| 
+
+      #unless characters.each_char.map  { |c| line.include?(c) }.include? false
+
+        #puts "Did you mean #{line}?"
+        #intent = gets.chomp.downcase
+
+        #case intent
+
+          #when 'yes'
+            #puts "#{line} deleted"
+            #content_array = IO.readlines("arraystarter.rb")
+            #content_array.delete(line)
+            #puts content_array
+
+          #when 'no'
+            #puts "Nevermind, then."
+
+        #end
+      #end
+    #}
 end
